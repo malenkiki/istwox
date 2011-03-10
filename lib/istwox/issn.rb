@@ -2,30 +2,40 @@ module Istwox
     class ISSN
         attr_accessor :code, :original, :ponderated, :check_digit
 
-        NB_CHAR      = 8
-        PRIME_NUMBER = 11
-
         def initialize(original)
-            @original   = original if original.is_a? String
+            @original   = original.strip if original.is_a? String
             @ponderated = []
             @code       = []
             extract_code()
+            calculate_check_digit()
+            raise ArgumentError, "Not valid ISSN string" unless is_valid?
         end
 
+        # Extract code form the given string into constructor.
         def extract_code
             @original.chars.map do |c|
                 @code.push c.to_i if c[/\d+/]
             end
+
+            if ['X','x'].include?(@original.reverse.chars.first) && @code.size == 7
+                @code.push @original.reverse.chars.first.upcase
+            end
         end
 
+        # Returns the first part of ISSN code
         def first_part
-            @code[0..3].to_s
+            @code[0..3]
         end
 
+        # Returns the second part of ISSN code (with check digit)
         def second_part
-            @code[4..7].to_s
+            @code[4..6].push check_digit_char()
         end
 
+        # Returns check digit char.
+        #
+        # This is not the same value as check_digit attribute, because is
+        # check digit is 10, this method returns 'X'
         def check_digit_char
             if @check_digit.eql? 10
                 return 'X'
@@ -34,40 +44,52 @@ module Istwox
             end
         end
 
+        # Is the code given to construct the object is valid or not?
         def is_valid?
-            @code[-1, 1].first.eql? @check_digit
+            @original.reverse.chars.first.upcase == check_digit_char()
         end
 
+        # Calculate ponderated values
+        #
+        # Ponderated values are used to calculate the check digit.
         def calculate_ponderated_values
-            nb_char = NB_CHAR
+            nb_char = 8
+            nb_char_cal = nb_char - 1
 
-            @code.take(NB_CHAR - 1).each do |c|
+            @code.take(nb_char_cal).each do |c|
                 @ponderated.push(c * nb_char)
-                nb_char = nb_char - 1
+                nb_char -= 1
             end
         end
 
+        # Calculate check digit
+        #
+        # Calculate check digit, that must be a digit from 0 to 9, if it is
+        # 10, then it is letter 'X'.
         def calculate_check_digit
             calculate_ponderated_values
+            prime_number = 11
 
-            sum = 0
-
-            @ponderated.each {|p| sum = sum + p }
-
-            reminder = sum % PRIME_NUMBER
+            reminder = @ponderated.inject(:+) % prime_number
 
             if reminder.zero?
                 @check_digit = 0
             else
-                @check_digit = PRIME_NUMBER - reminder
+                @check_digit = prime_number - reminder
             end
 
             @check_digit
         end
 
+        # Returns the string format of ISSN code.
+        #
+        # Format the ISSN code like defined into standard. For exemple, can
+        # return "ISSN 2111-403X"
         def to_s
-            'ISSN ' + first_part() + '-' + second_part()
+            'ISSN ' + first_part().join + '-' + second_part().join
         end
+
+        private :extract_code, :calculate_check_digit, :is_valid?, :calculate_ponderated_values
     end
 end
 
