@@ -8,7 +8,6 @@ module Istwox
             @code       = []
             extract_code()
             calculate_check_digit()
-            puts ((@original.reverse.chars.first.to_i == check_digit) && (['978', '979'].include? gs1_prefix && @code.count == 13))
             raise ArgumentError, "Not valid ISBN string" unless is_valid?
         end
 
@@ -51,7 +50,7 @@ module Istwox
 
         # Is the code given to construct the object is valid or not?
         def is_valid?
-            ((@original.reverse.chars.first.to_i == check_digit) && (['978', '979'].include? gs1_prefix && @code.count == 13)) || @code.count == 12
+            ((@original.reverse.chars.first.to_i == check_digit) && (['978', '979'].include? gs1_prefix) && @code.count == 13) || @code.count == 12
         end
 
         # Calculate ponderated values

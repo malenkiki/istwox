@@ -27,13 +27,13 @@ module Istwox
 
             if ('000'..'099').include? @code[4, 3].join
                 return @code[4, 3].join
-            elsif (1000..3999).include? @code[4, 4].join
+            elsif ('1000'..'3999').include? @code[4, 4].join
                 return @code[4, 4].join
-            elsif (40000..69999).include? @code[4, 5].join
+            elsif ('40000'..'69999').include? @code[4, 5].join
                 return @code[4, 5].join
-            elsif (700000..899999).include? @code[4, 6].join
+            elsif ('700000'..'899999').include? @code[4, 6].join
                 return @code[4, 6].join
-            elsif (9000000..9999999).include? @code[4, 7].join
+            elsif ('9000000'..'9999999').include? @code[4, 7].join
                 return @code[4, 7].join
             else
                 raise ArgumentError, "Publisher does not follow ISMN standard"
@@ -41,7 +41,7 @@ module Istwox
         end
 
         def item
-            @code[(identifier.length + 4)..11].join
+            @code[(publisher.length + 4)..11].join
         end
 
 
