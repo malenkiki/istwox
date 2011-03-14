@@ -1,4 +1,5 @@
 require "istwox/isbn"
 require "istwox/issn"
 require "istwox/ismn"
+require "istwox/isan"
 require "istwox/version"

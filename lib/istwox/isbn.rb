@@ -11,6 +11,10 @@ module Istwox
             raise ArgumentError, "Not valid ISBN string" unless is_valid?
         end
 
+        # todo
+        def create_from_old(old_format)
+        end
+
         # Extract code form the given string into constructor.
         def extract_code
             @original.chars.map do |c|
