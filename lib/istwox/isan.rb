@@ -1,12 +1,48 @@
 module Istwox
     class ISAN
-        attr_accessor :original, :root, :episode, :version, :check_digit_isan
+        attr_accessor :original, :code, :check_digit_isan
 
         def initialize(original)
             @original = original
+            @code = []
             # quick add, to check the good calcul of check digit, this must
             # change
+            extract_code()
             @check_digit_isan = compute_check_digit(original[0, 16])
+            raise ArgumentError, "Not valid ISAN string" unless is_valid?
+        end
+
+        def extract_code
+            @original.upcase.chars.each do |c|
+                @code.push c if c[/[A-Z0-9]+/]
+            end
+        end
+
+        def is_valid?
+            ((@original.downcase.reverse.chars.first == check_digit_isan) &&  @code.count == 13) || @code.count == 12
+        end
+
+        def root
+            @code[0, 12].join
+        end
+
+        def episode
+            @code[12, 4].join
+        end
+
+        def root_with_hyphen
+            chunk root
+        end
+
+        def chunk(str)
+            chunk = []
+            chunk_length = 4
+            start = 0
+            while start < str.length do
+                chunk.push(str[start...start+chunk_length])
+                start += chunk_length
+            end
+            chunk.join('-')
         end
 
         def compute_check_digit(str)
@@ -34,22 +70,42 @@ module Istwox
                 ap = p
                 ap = p - mod_one if p >= mod_one
             end
-
+p @code.join
             return '0'                     if ap == 1
             return (mod_one - ap).to_s     if (mod_one - ap < 10)
             return (mod_one - ap + 55).chr if (mod_one - ap >= 10)
         end
 
+        def to_s
+            'ISAN: ' + chunk(@code[0, 16].join) + '-' + @check_digit_isan
+        end
     end
 
     class VISAN < ISAN
         attr_accessor :check_digit_visan
 
         def initialize(original)
-            @original = original
-            # quick add, to check the good calcul of check digit, this must
-            # change
+            super
             @check_digit_visan = compute_check_digit(original)
+            raise ArgumentError, "Not valid ISAN string" unless is_valid?
+        end
+        
+        # to improve
+        def is_valid?
+            true
+            #((@original.downcase.reverse.chars.first == check_digit_isan) &&  @code.count == 13) || @code.count == 12
+        end
+        
+        def version
+            @code[17, 8].join
+        end
+
+        def version_with_hyphen
+            chunk version
+        end
+
+        def to_s
+            super + '-' + version_with_hyphen + '-' + @check_digit_visan
         end
     end
 end
