@@ -7,54 +7,59 @@ require File.expand_path(File.join('.', 'spec_helper'), File.dirname(__FILE__))
 # Stargate Atlantis - Season 1 - Disc 4: 0000-0000-DDB0-006B-M-0000-0000-8
 describe Istwox::ISAN, "Test International Standard Audiovisual Number (ISAN)" do
 
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should create valid ISAN" do
-      pending "ISAN must be implement first"
-      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3-0000-0000-S"
+  it "'' should not create ISAN" do
+      pending "add test with constructor that must fail"
+  end
+
+  it "'0000-0002-B3C8-0000-3' should create valid ISAN" do
+      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3"
       ismn.should be
   end
   
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should create valid ISAN" do
-      pending "ISAN must be implement first"
-      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3-0000-0000-S"
+  it "'00000002B3C800003' should create valid ISAN" do
+      ismn = Istwox::ISAN.new "00000002B3C800003"
       ismn.should be
   end
 
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should have root part '0000-0002-B3C8'" do
-      pending "ISAN must be implement first"
-      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3-0000-0000-S"
-      ismn.root.should  eq('0000-0002-B3C8')
-  end
-  
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should have episode part '0000'" do
-      pending "ISAN must be implement first"
-      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3-0000-0000-S"
-      ismn.episode.should eq('0000')
-  end
-  
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should have version part '0000-0000'" do
-      pending "ISAN must be implement first"
-      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3-0000-0000-S"
-      ismn.version.should eq('0000-0000')
+  it "'00000002B3C80000' should create valid ISAN" do
+      ismn = Istwox::ISAN.new "00000002B3C80000"
+      ismn.should be
   end
 
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should have first check digit '3'" do
-      pending "ISAN must be implement first"
-      isan = Istwox::ISAN.new "00000002B3C80000300000000S"
-      isan.check_digit_isan.should eq('3')
+  it "'0000-0002-B3C8-0000-3' should have root part '0000-0002-B3C8'" do
+      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3"
+      ismn.root_with_hyphen.should  == '0000-0002-B3C8'
+  end
+  
+  it "'0000-0002-B3C8-0000-3' should have episode part '0000'" do
+      ismn = Istwox::ISAN.new "0000-0002-B3C8-0000-3"
+      ismn.episode.should == '0000'
+  end
+  
+  it "'0000-0002-B3C8-0000-3' should have check digit '3'" do
+      isan = Istwox::ISAN.new "00000002B3C800003"
+      isan.check_digit_isan.should == '3'
   end
 
-  it "'0000-0002-B3C8-0000-3-0000-0000-S' should have second check digit 'S'" do
-      pending "ISAN must be implement first"
-      visan = Istwox::VISAN.new "00000002B3C8000000000000"
-      visan.check_digit_visan.should eq('S')
+  it "'00000002B3C80000' should have root part '0000-0002-B3C8'" do
+      ismn = Istwox::ISAN.new "00000002B3C80000"
+      ismn.root_with_hyphen.should == '0000-0002-B3C8'
   end
+  
+  it "'00000002B3C80000' should have episode part '0000'" do
+      ismn = Istwox::ISAN.new "00000002B3C80000"
+      ismn.episode.should == '0000'
+  end
+  
+  it "'00000002B3C80000' should have check digit '3'" do
+      isan = Istwox::ISAN.new "00000002B3C80000"
+      isan.check_digit_isan.should == '3'
+  end
+
 end
 
 
 describe Istwox::VISAN, "Test International Standard Audiovisual Number (VISAN)" do
-# 0000-0000-DDB0-0069-Q-0000-0000-X
-# 0000-0000-DDB0-006A-O-0000-0000-2
-# 0000-0000-DDB0-006B-M-0000-0000-8
   it "'ISAN: 0000-0000-DDB0-0069-Q-0000-0000-X' should create valid ISAN" do
       isan = Istwox::VISAN.new "0000-0000-DDB0-0069-Q-0000-0000-X"
       isan.should be

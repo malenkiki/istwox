@@ -24,7 +24,7 @@ module Istwox
         end
 
         def is_valid?
-            ((@original.downcase.reverse.chars.first == check_digit_isan) &&  @code.count == 13) || @code.count == 12
+            ((@original.upcase.reverse.chars.first == @check_digit_isan) || @code.count == 16)
         end
 
         def root
