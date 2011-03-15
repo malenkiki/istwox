@@ -5,10 +5,15 @@ module Istwox
         def initialize(original)
             @original = original
             @code = []
-            # quick add, to check the good calcul of check digit, this must
-            # change
+            
             extract_code()
-            @check_digit_isan = compute_check_digit(original[0, 16])
+
+            if @code.count == 17
+                @code.delete_at 16
+            end
+            
+            @check_digit_isan = compute_check_digit(@code[0, 16].join)
+            
             raise ArgumentError, "Not valid ISAN string" unless is_valid?
         end
 
@@ -38,10 +43,12 @@ module Istwox
             chunk = []
             chunk_length = 4
             start = 0
+
             while start < str.length do
                 chunk.push(str[start...start+chunk_length])
                 start += chunk_length
             end
+            
             chunk.join('-')
         end
 
@@ -70,7 +77,7 @@ module Istwox
                 ap = p
                 ap = p - mod_one if p >= mod_one
             end
-p @code.join
+            
             return '0'                     if ap == 1
             return (mod_one - ap).to_s     if (mod_one - ap < 10)
             return (mod_one - ap + 55).chr if (mod_one - ap >= 10)
@@ -86,8 +93,19 @@ p @code.join
 
         def initialize(original)
             super
-            @check_digit_visan = compute_check_digit(original)
-            raise ArgumentError, "Not valid ISAN string" unless is_valid?
+            
+            # only one check digit
+            if @code.count == 25
+                @code.delete_at 16
+            # two check digit
+            elsif @code.count == 26
+                @code.delete_at 25
+                @code.delete_at 16
+            end
+
+            @check_digit_visan = compute_check_digit(@code.join)
+            
+            raise ArgumentError, "Not valid VISAN string" unless is_valid?
         end
         
         # to improve
@@ -97,7 +115,7 @@ p @code.join
         end
         
         def version
-            @code[17, 8].join
+            @code[16, 8].join
         end
 
         def version_with_hyphen
