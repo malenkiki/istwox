@@ -1,6 +1,6 @@
 module Istwox
     class ISMN
-        attr_accessor :code, :original, :ponderated, :check_digit
+        attr_reader :code, :original, :ponderated, :check_digit
 
         def initialize(original)
             @original   = original.strip if original.is_a? String
@@ -13,13 +13,6 @@ module Istwox
 
         # todo
         def create_from_old(old_format)
-        end
-
-        # Extract code form the given string into constructor.
-        def extract_code
-            @original.chars.map do |c|
-                @code.push c.to_i if c[/\d+/]
-            end
         end
 
         def gs1_prefix
@@ -47,7 +40,24 @@ module Istwox
         def item
             @code[(publisher.length + 4)..11].join
         end
+        
+        # TODO: Unlike ISBN, we can get code with separated group.
+        def to_s
+            if @code.count < 13
+                @code.join + @check_digit.to_s
+            else
+                @code.join
+            end
+        end
 
+
+        private
+        # Extract code form the given string into constructor.
+        def extract_code
+            @original.chars.map do |c|
+                @code.push c.to_i if c[/\d+/]
+            end
+        end
 
         # Is the code given to construct the object is valid or not?
         def is_valid?
@@ -75,16 +85,6 @@ module Istwox
             @check_digit = 10 - (@ponderated.inject(:+) % 10)
         end
 
-        # TODO: Unlike ISBN, we can get code with separated group.
-        def to_s
-            if @code.count < 13
-                @code.join + @check_digit.to_s
-            else
-                @code.join
-            end
-        end
-
-        protected :extract_code, :calculate_check_digit, :is_valid?, :calculate_ponderated_values
     end
 
 end

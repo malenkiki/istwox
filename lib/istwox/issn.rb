@@ -1,6 +1,6 @@
 module Istwox
     class ISSN
-        attr_accessor :code, :original, :ponderated, :check_digit
+        attr_reader :code, :original, :ponderated, :check_digit
 
         def initialize(original)
             @original   = original.strip if original.is_a? String
@@ -11,6 +11,25 @@ module Istwox
             raise ArgumentError, "Not valid ISSN string" unless is_valid?
         end
 
+        # Returns the first part of ISSN code
+        def first_part
+            @code[0..3]
+        end
+
+        # Returns the second part of ISSN code (with check digit)
+        def second_part
+            @code[4..6].push check_digit_char()
+        end
+
+        # Returns the string format of ISSN code.
+        #
+        # Format the ISSN code like defined into standard. For exemple, can
+        # return "ISSN 2111-403X"
+        def to_s
+            'ISSN ' + first_part().join + '-' + second_part().join
+        end
+
+        private
         # Extract code form the given string into constructor.
         def extract_code
             @original.chars.map do |c|
@@ -20,16 +39,6 @@ module Istwox
             if ['X','x'].include?(@original.reverse.chars.first) && @code.size == 7
                 @code.push @original.reverse.chars.first.upcase
             end
-        end
-
-        # Returns the first part of ISSN code
-        def first_part
-            @code[0..3]
-        end
-
-        # Returns the second part of ISSN code (with check digit)
-        def second_part
-            @code[4..6].push check_digit_char()
         end
 
         # Returns check digit char.
@@ -81,15 +90,6 @@ module Istwox
             @check_digit
         end
 
-        # Returns the string format of ISSN code.
-        #
-        # Format the ISSN code like defined into standard. For exemple, can
-        # return "ISSN 2111-403X"
-        def to_s
-            'ISSN ' + first_part().join + '-' + second_part().join
-        end
-
-        private :extract_code, :calculate_check_digit, :is_valid?, :calculate_ponderated_values
     end
 end
 

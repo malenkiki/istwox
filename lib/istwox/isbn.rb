@@ -1,6 +1,6 @@
 module Istwox
     class ISBN
-        attr_accessor :code, :original, :ponderated, :check_digit
+        attr_reader :code, :original, :ponderated, :check_digit
 
         def initialize(original)
             @original   = original.strip if original.is_a? String
@@ -14,14 +14,7 @@ module Istwox
         # todo
         def create_from_old(old_format)
         end
-
-        # Extract code form the given string into constructor.
-        def extract_code
-            @original.chars.map do |c|
-                @code.push c.to_i if c[/\d+/]
-            end
-        end
-
+        
         # Get the GS1 prefix, 978 or 979
         def gs1_prefix
             @code[0..2].join
@@ -51,6 +44,26 @@ module Istwox
             @code[(group_identifier.length + 3)..11].join
         end
 
+        # Returns the string format into EAN-13 code.
+        #
+        # There are not free method available to have ISBN-13 code with hyphen
+        # to see groups. The groups "publisher" and "title" cannot be split.
+        # So, only EAN-13 (without hyphen) can be get.
+        # If you want other group than "publisher" and "title", see other
+        # method into this class.
+        def to_s
+            @code.join + @check_digit.to_s
+        end
+
+
+        private
+        # Extract code from the given string into constructor.
+        def extract_code
+            @original.chars.map do |c|
+                @code.push c.to_i if c[/\d+/]
+            end
+        end
+
 
         # Is the code given to construct the object is valid or not?
         def is_valid?
@@ -75,19 +88,6 @@ module Istwox
             calculate_ponderated_values
             @check_digit = (10 - (@ponderated.inject(:+) % 10)) % 10
         end
-
-        # Returns the string format into EAN-13 code.
-        #
-        # There are not free method available to have ISBN-13 code with hyphen
-        # to see groups. The groups "publisher" and "title" cannot be split.
-        # So, only EAN-13 (without hyphen) can be get.
-        # If you want other group than "publisher" and "title", see other
-        # method into this class.
-        def to_s
-            @code.join + @check_digit.to_s
-        end
-
-        protected :extract_code, :calculate_check_digit, :is_valid?, :calculate_ponderated_values
     end
 
     class ISBN10 < ISBN
