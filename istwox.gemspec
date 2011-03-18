@@ -2,7 +2,7 @@
 
 require "istwox"
 
-include_files = ["README", "LICENSE", "INSTALL", "Changelog", "init.rb", "{lib,spec,doc}/**/*"].map do |glob|
+include_files = ["README.rdoc", "LICENSE", "INSTALL", "init.rb", "{lib,spec,doc}/**/*"].map do |glob|
   Dir[glob]
 end.flatten
 
