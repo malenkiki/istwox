@@ -1,6 +1,6 @@
 = ISTWOX
 
-Istwox allows you to deal with ISBN, ISSN, ISRC, ISMN and ISAN code and maybe ISRN and ISTC soon…
+Istwox allows you to deal with ISBN, ISSN, ISRC, ISMN, ISTC and ISAN codes.
 
 Features are basic, but you can check code validity, get some formats…
 
@@ -8,15 +8,47 @@ Features are basic, but you can check code validity, get some formats…
 
 This Gem use ISXX codes, where XX is variable, so it is IS2X then I named it Istwox…
 
-== Do you have some example?
+== Do you have some examples?
 
-Yes, when I have some times to write them.
-Copyright (c) 1998, Regents of the University of California
-All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+Yes, when I have some times to write them. But in fact, it is very simple and basic to use…
+
+== More informations…
+
+=== ISAN
+* http://en.wikipedia.org/wiki/ISAN
+* http://www.isan.org
+* http://www.isan.org/docs/ISAN%20Implementation%20in%20WindowsMedia%20May%202006.pdf
+
+=== ISBN
+* http://en.wikipedia.org/wiki/ISBN
+* http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=36563
+
+=== ISMN
+* http://en.wikipedia.org/wiki/ISMN
+* http://www.ismn-international.org/
+* http://www.ismn-international.org/download/Web_ISMN_Users_Manual_2008-4.pdf
+
+=== ISRC
+* http://en.wikipedia.org/wiki/ISRC
+* http://www.ifpi.org/content/section_resources/isrc_handbook.html#Heading198
+
+=== ISSN
+* http://en.wikipedia.org/wiki/ISSN
+* http://www.issn.org/
+* http://www.oclc.org/firstsearch/periodicals/index_title.asp
+
+=== ISTC
+* http://en.wikipedia.org/wiki/International_Standard_Text_Code
+* http://www.istc-international.org/
+* http://www.istc-international.org/html/all_about_istc.aspx#structure
 
 == License
+
+    Copyright (c) 1998, Regents of the University of California
+    All rights reserved.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
 
     * Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
@@ -27,13 +59,13 @@ modification, are permitted provided that the following conditions are met:
       names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

@@ -1,3 +1,5 @@
-    * Add ISRN and ISRC? More information here:
-      http://nl.wikipedia.org/wiki/ISRN (yes, no english page yet for that :))
     * use Yard to document source code
+    * continue writing some tests (especially about oversized code)
+    * add some conditions into is_valid? methods of some classes
+    * add some constants into class (size…)
+    * ISMW and ISWN?

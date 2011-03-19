@@ -44,13 +44,18 @@ describe Istwox::ISBN, "Test International Standard Book Number (ISBN-13)" do
       isbn = Istwox::ISBN.new "9782035854377"
       isbn.publisher_code_and_title.should eq("03585437")
   end
+  
+  it "'2-08-112004-6' should create ISBN-13 '978-2-08-112004-4'" do
+      pending "implement ISBN#create_from_old method"
+      Istwox::ISBN.create_from_old("2081120046").to_s.should eq('9782081120044')
+  end
 end
 
 describe Istwox::ISBN10, "Test International Standard Book Number (old format ISBN-10)" do
 
-  it "'978 2035 854377' should create valid ISBN" do
-      pending
-      isbn = Istwox::ISBN10.new "978 2035 854377"
+  it "'2-08-112004-6' should create valid ISBN" do
+      pending "Finalize ISBN10 class"
+      isbn = Istwox::ISBN10.new "2-08-112004-6"
       isbn.should be
   end
 end
