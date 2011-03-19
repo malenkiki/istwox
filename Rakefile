@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'yard'
 require 'rake/gempackagetask'
 require 'rspec/core/rake_task'
 
@@ -11,13 +12,9 @@ RSpec::Core::RakeTask.new do |t|
   t.pattern = 'spec/*_spec.rb'
 end
 
-desc 'Generate API documentation to doc/index.html'
-Rake::RDocTask.new do |rd|
-  rd.rdoc_dir = 'doc'
-  rd.main = 'README.rdoc'
-  rd.rdoc_files.include 'README.rdoc', "lib/**/*\.rb" 
- 
-  rd.options << '--all'
+# See https://github.com/burtlo/YARD-Tutorial/wiki/Yard-parser to have more information
+YARD::Rake::YardocTask.new do |t|
+  t.options = ['--protected','--private', '--readme', 'README.rdoc']
 end
 
 desc 'generate gem file'

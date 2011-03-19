@@ -1,4 +1,3 @@
-    * use Yard to document source code
     * continue writing some tests (especially about oversized code)
     * add some conditions into is_valid? methods of some classes
     * add some constants into class (size…)
