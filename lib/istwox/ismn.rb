@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module Istwox
     class ISMN
         attr_reader :code, :original, :ponderated, :check_digit

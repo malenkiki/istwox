@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module Istwox
     class ISRC
         attr_reader :code, :original

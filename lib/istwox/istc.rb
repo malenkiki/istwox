@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module Istwox
     class ISTC
         attr_reader :original, :code, :weight, :check_digit

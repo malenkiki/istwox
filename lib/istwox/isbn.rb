@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module Istwox
     # This class can extract ISBN code, check its validity, and compute its check digit.
     #
