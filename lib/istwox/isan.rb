@@ -1,13 +1,27 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
+    # This class can extract ISAN code, check its validity, and compute its check digit.
+    #
+    # @note This is the short ISAN format, with one check digit and without
+    #   version part. To have this one, you must used VISAN class in place of
+    #   this.
+    #
+    # To have more information about ISAN format, please see following links:
+    # * http://en.wikipedia.org/wiki/ISAN
+    # * http://www.isan.org
+    # * http://www.isan.org/docs/ISAN%20Implementation%20in%20WindowsMedia%20May%202006.pdf
+    #
     # @attr_reader [String] original Stored string given into constructor
     # @attr_reader [Array] code Clean ISAN code
     # @attr_reader [Integer] check_digit_isan Computed check digit
     class ISAN
         attr_reader :original, :code, :check_digit_isan
 
+        # ISAN code full length (with meaning chars only) including check digit
         ISAN_FULL_LENGTH = 17
+
+        # ISAN code length w/o check digit
         ISAN_LENGTH = 16
 
         def initialize(original)
@@ -51,12 +65,16 @@ module Istwox
         end
 
         protected
+        # Extract code from a string
+        # Extracted characters are digits and letters
         def extract_code
             @original.upcase.chars.each do |c|
                 @code.push c if c[/[A-Z0-9]+/]
             end
         end
 
+        # Check the last digit with check digit or check code count with ISAN_LENGTH
+        # @return [Boolean]
         def is_valid?
             ((@original.upcase.reverse.chars.first == @check_digit_isan) || @code.count == ISAN_LENGTH)
         end
@@ -79,6 +97,7 @@ module Istwox
 
         # Compute the check digit
         # @note Calculus use uppercase characters
+        # @param [String] str The string from witch we want compute its check digit
         # @return [String] The check digit, as a string
         def compute_check_digit(str)
             s = as = p = ap = 0
@@ -112,6 +131,9 @@ module Istwox
         end
     end
 
+    # ISAN code with version and second check digit.
+    # @see ISAN
+    # @attr_reader [String] check_digit_visan 
     class VISAN < ISAN
         attr_reader :check_digit_visan
 

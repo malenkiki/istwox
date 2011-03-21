@@ -18,14 +18,14 @@ describe Istwox::ISMN, "Test International Standard Music Number" do
       ismn.check_digit.should eq(5)
   end
   
-  it "'979-0-2600-0043-8' should create EAN code 9790260000438" do
+  it "'979-0-2600-0043-8' should create 'ISMN: 979-0-2600-0043-8'" do
       ismn = Istwox::ISMN.new "979-0-2600-0043-8"
-      ismn.to_s.should eq("9790260000438")
+      ismn.to_s.should eq("ISMN: 979-0-2600-0043-8")
   end
   
-  it "'979-0-2600-0043' should create EAN code 9790260000438" do
+  it "'979-0-2600-0043' should create 'ISMN: 979-0-2600-0043-8'" do
       ismn = Istwox::ISMN.new "979-0-2600-0043"
-      ismn.to_s.should eq("9790260000438")
+      ismn.to_s.should eq("ISMN: 979-0-2600-0043-8")
   end
   
   

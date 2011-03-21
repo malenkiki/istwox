@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
+    #
+    # * http://en.wikipedia.org/wiki/ISMN
+    # * http://www.ismn-international.org/
+    # * http://www.ismn-international.org/download/Web_ISMN_Users_Manual_2008-4.pdf
     class ISMN
         attr_reader :code, :original, :ponderated, :check_digit
 
@@ -43,13 +47,9 @@ module Istwox
             @code[(publisher.length + 4)..11].join
         end
         
-        # TODO: Unlike ISBN, we can get code with separated group.
         def to_s
-            if @code.count < 13
-                @code.join + @check_digit.to_s
-            else
-                @code.join
-            end
+            'ISMN: ' + gs1_prefix + '-0-' + publisher + '-' + item + '-' + @check_digit.to_s
+
         end
 
 
