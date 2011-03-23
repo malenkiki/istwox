@@ -7,6 +7,8 @@ module Istwox
     #   version part. To have this one, you must used VISAN class in place of
     #   this.
     #
+    # ISAN is an acronym of "International Standard Audiovisual Number".
+    #
     # To have more information about ISAN format, please see following links:
     # * http://en.wikipedia.org/wiki/ISAN
     # * http://www.isan.org

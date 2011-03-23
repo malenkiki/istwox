@@ -1,6 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
+    # ISSN is an acronym for "International Standard Serial Number".
+    #
+    # * http://en.wikipedia.org/wiki/ISSN
+    # * http://www.issn.org/
+    # * http://www.oclc.org/firstsearch/periodicals/index_title.asp
     class ISSN
         attr_reader :code, :original, :ponderated, :check_digit
 

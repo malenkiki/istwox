@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
+    # ISRC is an acronym of "International Standard Recording Code".
+    #
+    # * http://en.wikipedia.org/wiki/ISRC
+    # * http://www.ifpi.org/content/section_resources/isrc_handbook.html#Heading198
     class ISRC
         attr_reader :code, :original
         ISRC_LENGTH = 12

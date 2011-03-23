@@ -5,6 +5,8 @@ module Istwox
     #
     # You can also get some part of the code, like GS1 prefix, group identifier…
     #
+    # ISBN is an acronym of "International Standard Book Number".
+    #
     # @note The ISBN format is the one that taked place in 2007, replacing
     #    ISBN old format on 10 digits. To use this old format, please use
     #    {ISBN10} class.

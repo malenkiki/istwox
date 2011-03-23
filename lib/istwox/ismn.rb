@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
+    # ISMN is an acronym of "International Standard Music Number".
     #
     # * http://en.wikipedia.org/wiki/ISMN
     # * http://www.ismn-international.org/
@@ -8,6 +9,12 @@ module Istwox
     class ISMN
         attr_reader :code, :original, :ponderated, :check_digit
 
+        # Initilize new instance, extract code and compute check digit.
+        #
+        # @see #extract_code
+        # @see #calculate_check_digit
+        #
+        # @raise [ArgumentError] If string cannot be an ISMN
         def initialize(original)
             @original   = original.strip if original.is_a? String
             @ponderated = []
@@ -17,14 +24,22 @@ module Istwox
             raise ArgumentError, "Not valid ISMN string" unless is_valid?
         end
 
-        # todo
+        # @todo Create ISMN code from its old standard.
         def create_from_old(old_format)
         end
-
+        
+        # Get the GS1 prefix part
+        #
+        # @return [String] A string of 3 digits.
         def gs1_prefix
             @code[0..2].join
         end
 
+        # Get the publisher part.
+        #
+        # This part has a variable length from 3 to 7 digits.
+        # 
+        # @return [String] A variable lengthed string
         def publisher
             g = @code[4]
 
@@ -43,10 +58,20 @@ module Istwox
             end
         end
 
+        # Get the item part.
+        #
+        # Its length depends on publisher part’s length.
+        #
+        # @return [String] A string
         def item
             @code[(publisher.length + 4)..11].join
         end
         
+        # Printed format.
+        #
+        # This contains ISMN prefix string, hyphen and check digit.
+        #
+        # @return [String] The printed format of ISMN
         def to_s
             'ISMN: ' + gs1_prefix + '-0-' + publisher + '-' + item + '-' + @check_digit.to_s
 
@@ -55,6 +80,8 @@ module Istwox
 
         private
         # Extract code form the given string into constructor.
+        #
+        # @private
         def extract_code
             @original.chars.map do |c|
                 @code.push c.to_i if c[/\d+/]
@@ -62,13 +89,17 @@ module Istwox
         end
 
         # Is the code given to construct the object is valid or not?
+        # 
+        # @todo Explain the test in the doc
+        #
+        # @return [Boolean]
         def is_valid?
             ((@original.reverse.chars.first.to_i == check_digit) && (gs1_prefix == '979') && @code.count == 13) || @code.count == 12
         end
 
-        # Calculate ponderated values
+        # Calculate ponderated values used to calculate the check digit.
         #
-        # Ponderated values are used to calculate the check digit.
+        # @private
         def calculate_ponderated_values
             1.upto(12) do |i|
                 c = @code[i - 1]
@@ -79,9 +110,11 @@ module Istwox
             end
         end
 
-        # Calculate check digit
+        # Calculate check digit and set it as attribute
         #
-        # Calculate check digit, that must be a digit from 0 to 9
+        # This must be a digit from 0 to 9
+        #
+        # @see #calculate_ponderated_values
         def calculate_check_digit
             calculate_ponderated_values
             @check_digit = 10 - (@ponderated.inject(:+) % 10)
