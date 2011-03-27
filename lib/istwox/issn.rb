@@ -3,9 +3,18 @@
 module Istwox
     # ISSN is an acronym for "International Standard Serial Number".
     #
+    # To have more information, please see following links:
+    #
     # * http://en.wikipedia.org/wiki/ISSN
     # * http://www.issn.org/
     # * http://www.oclc.org/firstsearch/periodicals/index_title.asp
+    #
+    # @attr_reader [Array] code Extracted code
+    # @attr_reader [String] original Original given string to have the code
+    # @attr_reader [Array] ponderated Computed weighted values
+    # @attr_reader [Integer] check_digit Computed check digit
+    #
+    # @raise [ArgumentError] If given string cannot be used to create valid ISSN code
     class ISSN
         attr_reader :code, :original, :ponderated, :check_digit
 
@@ -19,21 +28,42 @@ module Istwox
         end
 
         # Returns the first part of ISSN code
+        #
+        # @return [String] A string of 4 chars
         def first_part
-            @code[0..3]
+            @code[0..3].join
         end
 
         # Returns the second part of ISSN code (with check digit)
+        #
+        # @return [String] A string of 4 chars
         def second_part
-            @code[4..6].push check_digit_char()
+            (@code[4..6].push check_digit_char()).join
         end
+        
+        # Returns check digit char.
+        #
+        # This is not the same value as check_digit attribute, because is
+        # check digit is 10, this method returns 'X'
+        #
+        # @return [String] Check digit char
+        def check_digit_char
+            if @check_digit.eql? 10
+                return 'X'
+            else
+                return @check_digit.to_s
+            end
+        end
+
 
         # Returns the string format of ISSN code.
         #
         # Format the ISSN code like defined into standard. For exemple, can
         # return "ISSN 2111-403X"
+        #
+        # @return [String] Formated code
         def to_s
-            'ISSN ' + first_part().join + '-' + second_part().join
+            'ISSN ' + first_part() + '-' + second_part()
         end
 
         private
@@ -48,19 +78,9 @@ module Istwox
             end
         end
 
-        # Returns check digit char.
-        #
-        # This is not the same value as check_digit attribute, because is
-        # check digit is 10, this method returns 'X'
-        def check_digit_char
-            if @check_digit.eql? 10
-                return 'X'
-            else
-                return @check_digit.to_s
-            end
-        end
-
         # Is the code given to construct the object is valid or not?
+        #
+        # @return [Boolean]
         def is_valid?
             @original.reverse.chars.first.upcase == check_digit_char()
         end
@@ -82,6 +102,10 @@ module Istwox
         #
         # Calculate check digit, that must be a digit from 0 to 9, if it is
         # 10, then it is letter 'X'.
+        #
+        # @see #calculate_check_digit
+        #
+        # @return [Integer] Integer value of the check digit
         def calculate_check_digit
             calculate_ponderated_values
             prime_number = 11

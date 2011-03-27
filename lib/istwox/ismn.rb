@@ -1,11 +1,19 @@
 # -*- encoding: utf-8 -*-
 
 module Istwox
-    # ISMN is an acronym of "International Standard Music Number".
+    # ISMN code number with check digit, format…
+    #
+    # ISMN is an acronym of "International Standard Music Number", for more
+    # information, see links below:
     #
     # * http://en.wikipedia.org/wiki/ISMN
     # * http://www.ismn-international.org/
     # * http://www.ismn-international.org/download/Web_ISMN_Users_Manual_2008-4.pdf
+    #
+    # @attr_reader [Array] code Extracted code.
+    # @attr_reader [String] original String given to create the code.
+    # @attr_reader [Array] ponderated Computed weighted walues.
+    # @attr_reader [Integer] check_digit Computed check digit.
     class ISMN
         attr_reader :code, :original, :ponderated, :check_digit
 

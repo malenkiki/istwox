@@ -3,13 +3,25 @@
 module Istwox
     # ISTC is an acronym for "International Standard Text Code".
     #
+    # This class allow you to extract some code parts, compute check digit, check validity…
+    #
+    # For more information, see this link:
     # * http://en.wikipedia.org/wiki/International_Standard_Text_Code
     # * http://www.istc-international.org/
     # * http://www.istc-international.org/html/all_about_istc.aspx#structure
+    #
+    # @attr_reader [String] original Original given string
+    # @attr_reader [Array] code Extracted code
+    # @attr_reader [Array] weight Weights used to compute check digit
+    # @attr_reader [String] check_digit Check digit char
     class ISTC
         attr_reader :original, :code, :weight, :check_digit
 
         # todo: put is_valid to raise exception in some cases…
+        #
+        # @see #extract_code
+        # @see create_weight_index
+        # @see calculate_check_digit
         def initialize(original)
             @original = original
             @code = []
@@ -74,6 +86,7 @@ module Istwox
 
         # @todo The valid method must to do.
         # @private
+        # @return [Boolean]
         def is_valid?
         end
 

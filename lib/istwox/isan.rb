@@ -135,11 +135,14 @@ module Istwox
 
     # ISAN code with version and second check digit.
     # @see ISAN
-    # @attr_reader [String] check_digit_visan 
+    # @attr_reader [String] check_digit_visan Check digit of VISAN part 
     class VISAN < ISAN
         attr_reader :check_digit_visan
 
+        # Full length of VISAN code, with check digit included
         VISAN_FULL_LENGTH = 26
+
+        # Length of VISAN without check digit
         VISAN_LENGTH = 25
 
         def initialize(original)

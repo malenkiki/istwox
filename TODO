@@ -2,3 +2,4 @@
     * add some conditions into is_valid? methods of some classes
     * add some constants into class (size…)
     * ISMW and ISWN?
+    * Rename all "ponderated" to "weighted"…

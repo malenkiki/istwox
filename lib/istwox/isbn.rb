@@ -163,7 +163,11 @@ module Istwox
     # @note This is the old format, since 2007, you must use {ISBN} on 13 digits
     #   (EAN-like format)
     class ISBN10 < ISBN
+
+        # ISBN full length including check digit
         ISBNX_FULL_LENGTH = 10
+
+        # ISBN length without check digit
         ISBNX_LENGTH = 9
 
         private
